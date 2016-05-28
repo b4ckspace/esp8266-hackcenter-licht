@@ -13,5 +13,5 @@ do
       sed 's/unsigned char/const PROGMEM char/' | \
       sed 's/};/, 0x00 };/' >> $target
 
-   #rm $file.wrzlbrnft
+   rm $file.wrzlbrnft
 done
