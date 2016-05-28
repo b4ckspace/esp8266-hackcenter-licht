@@ -1,0 +1,7 @@
+#define NUM_LIGHTS 10
+
+#define I2C_SDA D3
+#define I2C_SCL D4
+
+#define WIFI_SSID "----"
+#define WIFI_PASSWORD "----"
