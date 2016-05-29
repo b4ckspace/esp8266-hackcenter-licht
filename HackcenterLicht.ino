@@ -17,6 +17,14 @@ const PROGMEM char text_html[] = "text/html";
 PCA9685 driver = PCA9685(0x00, PCA9685_MODE_N_DRIVER);
 ESP8266WebServer server(80);
 
+uint8_t mapLightAddress(uint8_t light) {
+  if(light == 9) {
+    return 10;
+  }
+
+  return light;
+}
+
 void getLights() {
 
   DynamicJsonBuffer jsonBuffer;
@@ -50,7 +58,7 @@ void setLight(uint8_t light) {;
   }
   
   uint16_t value = map(incomingValue, 0, 100, PCA9685_FULL_OFF, PCA9685_FULL_ON);
-  driver.getPin(light).setValueAndWrite(value);
+  driver.getPin(mapLightAddress(light)).setValueAndWrite(value);
 
   lightValues[light] = incomingValue;
   
@@ -82,6 +90,7 @@ void setup() {
 
   Wire.begin(I2C_SDA, I2C_SCL);
   driver.setup();
+  
 
   server.on("/", []() {
     server.send_P(200, text_html, static_index_html);
@@ -90,6 +99,7 @@ void setup() {
   server.on("/lights", HTTP_GET, getLights);
 
   for (uint8_t light = 0; light < NUM_LIGHTS; light++) {
+    driver.getPin(mapLightAddress(light)).setValueAndWrite(0);
 
     sprintf(routeHelper, "/lights/%d", light);
     
