@@ -19,6 +19,7 @@
 
         .light-carrier {
 
+            position: relative;
             margin: 0 auto;
 
             width: 900px;
@@ -34,6 +35,8 @@
         }
 
         .light {
+            position: absolute;
+
             width: 179px;
             height: 100px;
 
@@ -75,7 +78,6 @@
     }
 
     var lightCarrier = document.getElementsByClassName('light-carrier')[0];
-
     var request = new XMLHttpRequest();
 
     request.open('GET', '/lights', true);
@@ -89,7 +91,10 @@
 
             var id = entry.id;
             var light = document.createElement('div');
+            
             light.setAttribute('class', 'light');
+            light.style.left = (Math.floor(id / 2) * 179) + 'px';
+            light.style.top = (((id +1) % 2) * 100) + 'px';
 
             var lightBulb = document.createElement('div');
             lightBulb.setAttribute('class', 'light-bulb');
