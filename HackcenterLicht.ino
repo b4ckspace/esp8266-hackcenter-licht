@@ -14,7 +14,7 @@
 uint8_t lightValues[NUM_LIGHTS] = { 0 };
 const PROGMEM char text_html[] = "text/html";
 
-PCA9685 driver = PCA9685(0x00, PCA9685_MODE_N_DRIVER);
+PCA9685 driver = PCA9685(0x00, PCA9685_MODE_N_DRIVER, PCA9685_MAX_FREQUENCY);
 ESP8266WebServer server(80);
 
 uint8_t mapLightAddress(uint8_t light) {
